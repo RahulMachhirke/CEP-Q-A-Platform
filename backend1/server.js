@@ -14,6 +14,13 @@ app.use(express.urlencoded({ extended: true }));
 
 const path = require('path');
 
+// 1. Serve static assets (CSS, client JS, images) directly from the current folder
+app.use(express.static(__dirname));
+
+// 2. Serve index.html when visiting the root URL '/'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 // Serves files inside /uploads publicly at the route http://localhost:5000/uploads/
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -35,3 +42,5 @@ mongoose
     app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
   })
   .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+
+  
