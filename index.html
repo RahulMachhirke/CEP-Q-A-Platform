@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduQ </title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQ - Student Q&A Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <!-- Top Navigation Bar -->
 <nav class="navbar">
-<a href="#" class="logo">EduQ</a>
-<div class="nav-actions">
-<a href="ask.html" class="btn btn-primary" id="ask-btn">+ Ask Question</a>
-<a href="login.html" class="btn btn-secondary">Login / Register</a>
+<a href="index.html" class="logo">EduQ</a>
+<div class="nav-actions" id="nav-actions">
+<!-- Dark/Light Theme Toggle Button -->
+<button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">🌙</button>
+<!-- Dynamically updated by main.js based on session -->
+<a href="query.html" class="btn btn-primary" id="ask-btn">+ Ask Question</a>
+<a href="login.html" class="btn btn-secondary" id="auth-btn">Login / Register</a>
 </div>
-</nav>
+  </nav>
 
   <!-- Main Container -->
   <main class="feed-container">
@@ -29,106 +29,79 @@
       <button class="btn btn-primary" id="search-btn">Search</button>
     </header>
 
+    <!-- Branch & Subject Filter Controls -->
+    <div class="filter-controls-card">
+      <div class="filter-group">
+        <label for="branch-filter">🎯 Branch:</label>
+        <select id="branch-filter" class="filter-select">
+          <option value="ALL">All Branches</option>
+          <option value="IT">Information Technology (IT)</option>
+          <option value="CSE">Computer Science (CSE)</option>
+          <option value="ECE">Electronics (ECE)</option>
+          <option value="MECH">Mechanical (MECH)</option>
+          <option value="CIVIL">Civil (CIVIL)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="subject-filter">📚 Subject:</label>
+        <select id="subject-filter" class="filter-select">
+          <option value="ALL">All Subjects</option>
+          <option value="Data Structures">Data Structures</option>
+          <option value="Algorithms">Algorithms</option>
+          <option value="Database Systems">Database Systems</option>
+          <option value="Operating Systems">Operating Systems</option>
+          <option value="Computer Networks">Computer Networks</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Digital Electronics">Digital Electronics</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+
+      <button id="btn-reset-filters" class="btn-filter-reset" type="button">🔄 Reset Filters</button>
+    </div>
+
     <!-- Two-Column Grid Layout -->
     <div class="layout-grid">
       
       <!-- LEFT COLUMN: Questions Feed & Filter -->
       <section class="questions-list">
-
-        <!-- Branch & Seniority Filter Bar -->
-        <div class="filter-bar">
-          <label class="checkbox-label">
-            <input type="checkbox" id="branch-filter-check">
-            Show My Branch Only & Sort by Seniority 
-          </label>
-        </div>
         
-        <!-- Question Card 1 -->
-        <article class="card">
-          <div class="card-header">
-            <span class="tag">#DataStructures</span>
-            <span class="branch-badge">Target Branch: IT</span>
-          </div>
-          <h2 class="question-title">How does QuickSort partitioning work in memory?</h2>
-          <p class="author">Asked by <strong>Aman V. (IT, 2nd Year)</strong></p>
-          
-          
+        <!-- DYNAMIC CONTAINER FOR MONGODB QUESTIONS -->
+        <div id="questions-container">
+          <p class="loading-text">Loading questions from server...</p>
+        </div>
 
-
-
-<!-- Container where the JS form will be dynamically injected -->
-<div class="answer-form-wrapper"></div>
-
-<div class="answers-container">
-<h4 class="answers-title">Answers</h4>
-
-<button class="btn btn-secondary btn-reply" onclick="toggleAnswerForm(this)">+ Write an Answer</button>
-
-<!-- Container where the JS form will be dynamically injected -->
-<div class="answer-form-wrapper"></div>
-            
-            <!-- Answer 1 (Graduated Senior Solution) -->
-<div class="answer-card" data-branch="IT" data-rank="5">
-<div class="user-meta">
-<span class="author-name">Rahul M</span>
-<span class="badge badge-graduated">IT 2nd Year</span>
-<button class="btn-id" onclick="openIdModal('/uploads/id_cards/rahul_id.jpg', 'Rahul Sharma')">🪪 View </button>
-</div>
-<p class="answer-text">QuickSort uses the Divide and Conquer strategy. The array is partitioned based on a pivot element. Here is the breakdown step-by-step...</p>
-<a href="#" class="link-file">📎  Notes (PDF)</a>
-<span class="timestamp">Answered on Aug 30, 2026</span>
-</div>
-
-<!-- Answer 2 (4th Year Solution) -->
-<div class="answer-card" data-branch="IT" data-rank="4">
-<div class="user-meta">
-<span class="author-name">Priya Patel</span>
-<span class="badge badge-year">IT • 4th Year</span>
-<button class="btn-id" onclick="openIdModal('/uploads/id_cards/priya_id.jpg', 'Priya Patel')">🪪 View </button>
-</div>
-<p class="answer-text">Make sure to consider space complexity for recursive call stacks when explaining this to the viva external.</p>
-<span class="timestamp">Answered on Aug 30, 2026</span>
-</div>
-</div>
-
-</article>
-
-</section>
+      </section>
 
       <!-- RIGHT COLUMN: Sidebar Widgets -->
       <aside class="sidebar">
-        
-        
-
         <div class="widget">
           <h3>📌 Quick Filters</h3>
           <ul>
-            <li><a href="#">My Asked Doubts</a></li>
-            <li><a href="#">Browse Shared PDF Notes</a></li>
+            <li><a href="#" id="filter-my-doubts">My Asked Doubts</a></li>
+            <li><a href="#" id="filter-notes">Browse Shared PDF Notes</a></li>
           </ul>
         </div>
-
       </aside>
 
     </div>
   </main>
 
-  <!-- ID Card Verification Modal -->
-  <div id="id-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeIdModal()">&times;</span>
-      <h3 id="modal-user-name">Student ID Verification</h3>
-      <div class="id-card-preview">
-        <img id="modal-id-img" src="" alt="Student ID Card Image">
-      </div>
-      <p class="id-note">This ID card is uploaded by the student for peer cross-verification.</p>
-    </div>
+  <!-- ID CARD PREVIEW MODAL -->
+<div id="id-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
+  <div style="background: #fff; padding: 1.5rem; border-radius: 8px; max-width: 400px; text-align: center; position: relative;">
+    <h3 id="modal-user-name" style="margin-bottom: 1rem;">Student ID</h3>
+    <img id="modal-id-img" src="" alt="Student ID" style="max-width: 100%; max-height: 300px; border-radius: 6px; object-fit: contain;">
+    <br>
+    <button onclick="closeIdModal()" style="margin-top: 1rem; padding: 0.5rem 1.2rem; cursor: pointer; border: none; background: #007bff; color: white; border-radius: 4px;">Close</button>
   </div>
+</div>
+
+  <footer class="footer">
+    <p>&copy; 2026 EduQ rights reserved.</p>
+  </footer>
 
   <script src="main.js"></script>
-
-
-
-
 </body>
 </html>

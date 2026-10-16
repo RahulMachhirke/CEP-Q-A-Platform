@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQ - Student Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">EduQ</a>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">🌙</button>
+      <a href="index.html" class="btn btn-secondary">← Back to Feed</a>
+    </div>
+  </nav>
+
+  <!-- Register Form Container -->
+  <main class="auth-container">
+    <form id="register-form" class="auth-card" enctype="multipart/form-data">
+      
+      <!-- TOP PROMINENT LOGIN LINK -->
+      <div class="auth-top-banner">
+        <span>Already Registered?</span>
+        <a href="login.html" class="btn-link-highlight">Login here →</a>
+      </div>
+
+      <div class="auth-header">
+        <h2>Join EduQ</h2>
+        <p class="auth-sub">Let's get you started!</p>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-name">Full Name</label>
+        <input type="text" id="reg-name" name="fullName" required placeholder="e.g. Rohit Sharma">
+      </div>
+
+      <div class="form-group">
+        <label for="reg-email">College Email</label>
+        <input type="email" id="reg-email" name="email" required placeholder="e.g. rohit@college.edu">
+      </div>
+
+      <div class="form-group">
+        <label for="reg-password">Create Password</label>
+        <input type="password" id="reg-password" name="password" minlength="6" required placeholder="Minimum 6 characters">
+      </div>
+
+      <div class="form-group">
+        <label for="reg-branch">Branch of Study</label>
+        <select id="reg-branch" name="branch" required>
+          <option value="" disabled selected>Select your branch</option>
+          <option value="IT">Information Technology (IT)</option>
+          <option value="CSE">Computer Engineering (CSE)</option>
+          <option value="ECE">Electronics (ECE)</option>
+          <option value="MECH">Mechanical (MECH)</option>
+          <option value="CIVIL">Civil (CIVIL)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-year">Academic Status</label>
+        <select id="reg-year" name="status" required>
+          <option value="" disabled selected>Select your current status</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+          <option value="Graduated">Graduated / Alumni</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-idcard">Upload ID Card Photo (For Verification)</label>
+        <input type="file" id="reg-idcard" name="idCard" accept="image/*" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Register Account</button>
+    </form>
+</main>
+
+<script src="main.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const registerForm = document.getElementById('register-form');
+
+  if (!registerForm) {
+    console.error('❌ Could not find element with id "register-form"');
+    return;
+  }
+
+  registerForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const registerBtn = document.getElementById('registerBtn');
+    if (registerBtn) {
+      registerBtn.disabled = true;
+      registerBtn.textContent = 'Registering...';
+    }
+
+    // Build FormData
+    const formData = new FormData();
+    formData.append('fullName', document.getElementById('reg-name').value);
+    formData.append('email', document.getElementById('reg-email').value);
+    formData.append('password', document.getElementById('reg-password').value);
+    formData.append('branch', document.getElementById('reg-branch').value);
+    formData.append('status', document.getElementById('reg-year').value);
+
+    const fileInput = document.getElementById('reg-idcard');
+    if (fileInput && fileInput.files.length > 0) {
+      formData.append('idCard', fileInput.files[0]);
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.user) {
+          localStorage.setItem('registeredUser', JSON.stringify(data.user));
+        }
+        // Redirect directly without blocking alerts or button reset interfering
+        window.location.href = 'success.html?action=registered';
+      } else {
+        alert('Registration Failed: ' + (data.message || 'Error occurred'));
+        // Re-enable button ONLY on failure
+        if (registerBtn) {
+          registerBtn.disabled = false;
+          registerBtn.textContent = 'Register Account';
+        }
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      alert('Server error or network failure.');
+      // Re-enable button ONLY on network failure
+      if (registerBtn) {
+        registerBtn.disabled = false;
+        registerBtn.textContent = 'Register Account';
+      }
+    }
+  });
+});
+</script>
+
+<footer class="footer">
+<p>&copy; 2026 EduQ rights reserved.</p>
+</footer>
+  
+</body>
+</html>

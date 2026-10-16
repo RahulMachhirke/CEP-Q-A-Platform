@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQ - Ask a Question</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">EduQ</a>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">🌙</button>
+      <a href="index.html" class="btn btn-secondary">← Back to Feed</a>
+    </div>
+  </nav>
+
+  <!-- Ask Form Container -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>Ask an Academic Doubt</h2>
+      <p class="auth-sub">Post your question</p>
+
+      <form id="post-question-form">
+        <div class="form-group">
+          <label for="question-title">Question Title / Doubt</label>
+          <input type="text" id="question-title" placeholder="e.g. How does QuickSort partitioning work in memory?" required>
+        </div>
+
+        <div class="form-group">
+          <label for="target-branch">Target Branch</label>
+          <select id="target-branch" required>
+            <option value="IT">Information Technology (IT)</option>
+            <option value="CSE">Computer Engineering (CSE)</option>
+            <option value="ECE">Electronics (ECE)</option>
+            <option value="MECH">Mechanical (MECH)</option>
+            <option value="CIVIL">Civil (CIVIL)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="question-subject">Academic Subject</label>
+          <select id="question-subject" required>
+            <option value="General">General Doubt</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Algorithms">Algorithms</option>
+            <option value="Database Systems">Database Systems</option>
+            <option value="Operating Systems">Operating Systems</option>
+            <option value="Computer Networks">Computer Networks</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Digital Electronics">Digital Electronics</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="question-details">Additional Details / Context (Optional)</label>
+          <textarea id="question-details" rows="5" placeholder="Explain what you have tried or specify where you are stuck..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">Post Question</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 EduQ rights reserved.</p>
+  </footer>
+
+  <!-- Linked main.js to handle full-stack database POST request -->
+  <script src="main.js"></script>
+</body>
+</html>

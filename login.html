@@ -3,58 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduQ - Student Registration</title>
+  <title> Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="auth-container">
-    <form class="auth-card" enctype="multipart/form-data">
-      <h2>Join EduQ</h2>
-      <p class="auth-sub">Let's get you started!</p>
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">EduQ</a>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">🌙</button>
+      <a href="index.html" class="btn btn-secondary">← Back to Feed</a>
+    </div>
+  </nav>
 
-      <p>                                                          </p>      
-
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" name="name" required placeholder="">
+  <!-- Login Form Container -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Welcome Back</h2>
+        <p class="auth-sub">Enter your details to log in </p>
       </div>
 
-      <div class="form-group">
-        <label>College Email</label>
-        <input type="email" name="email" required placeholder="">
-      </div>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">College Email Address</label>
+          <input type="email" id="login-email" placeholder="e.g. student@college.edu" required>
+        </div>
 
-      <div class="form-group">
-        <label>Branch of Study</label>
-        <select name="branch" required>
-          <option value="IT">Information Technology (IT)</option>
-          <option value="CSE">Computer Engineering (CSE)</option>
-          <option value="ECE">Electronics (ECE)</option>
-          <option value="MECH">Mechanical (MECH)</option>
-          <option value="CIVIL">Civil (CIVIL)</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" required>
+        </div>
 
-      <div class="form-group">
-        <label>Academic Status</label>
-        <select name="status" required>
-          <option value="1st Year">1st Year</option>
-          <option value="2nd Year">2nd Year</option>
-          <option value="3rd Year">3rd Year</option>
-          <option value="4th Year">4th Year</option>
-          <option value="Graduated">Graduated / Alumni</option>
-        </select>
-      </div>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
 
-      <div class="form-group">
-        <label>Upload ID Card Photo (For Verification)</label>
-        <input type="file" name="idCardPic" accept="image/*" required>
-      </div>
+      <p class="auth-footer">
+        New to EduQ? <a href="register.html">Create an account here</a>
+      </p>
+    </div>
+  </main>
 
-      <button type="submit" class="btn btn-primary btn-block">Register Account</button>
-    </form>
-  </div>
+  <script src="main.js"></script>
+
+<footer class="footer">
+    <p>&copy; 2026 EduQ rights reserved.</p>
+  </footer>
+
 
 </body>
 </html>

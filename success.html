@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQ - Success</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">EduQ</a>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-card success-card">
+      <div class="success-icon">✓</div>
+      <h2 id="success-title">Successfully Logged In!</h2>
+      <p id="success-message" class="auth-sub">Welcome to EduQ. Your session is active.</p>
+
+      <a href="index.html" class="btn btn-primary btn-block" style="margin-top: 1.5rem; text-decoration: none; text-align: center;">Get Back to Home Page</a>
+    </div>
+  </main>
+
+  <script>
+    // Customize message depending on URL parameter (?action=registered or ?action=logged_in)
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const action = urlParams.get('action');
+
+      const titleEl = document.getElementById('success-title');
+      const msgEl = document.getElementById('success-message');
+
+      const registeredUser = JSON.parse(localStorage.getItem('registeredUser')) || null;
+      const loggedInUser = JSON.parse(localStorage.getItem('userData')) || null;
+
+      if (action === 'registered') {
+        const name = registeredUser?.fullName || 'Student';
+        if (titleEl) titleEl.innerText = `Registration Successful!`;
+        if (msgEl) msgEl.innerText = `Welcome, ${name}! Your EduQ account has been created successfully.`;
+      } else {
+        const name = loggedInUser?.fullName || 'Student';
+        if (titleEl) titleEl.innerText = `Welcome Back!`;
+        if (msgEl) msgEl.innerText = `Logged in successfully as ${name}. Your session is active.`;
+      }
+    });
+</script>
+
+
+  <footer class="footer">
+    <p>&copy; 2026 EduQ rights reserved.</p>
+  </footer>
+</body>
+</html>
